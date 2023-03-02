@@ -137,15 +137,18 @@ const App = () => {
         </div>
       )}
 
-      <div className="fullwidthWrapper">
-        <button className="fullwidthButton" onClick={toggleFullScreen}>
-          {isFullscreen ? (
-            <ExitFullscreenIcon width={36} fill="#fff" />
-          ) : (
-            <FullscreenIcon width={36} fill="#fff" />
-          )}
-        </button>
-      </div>
+      {!selectedImageSet && (
+        <div className="fullwidthWrapper">
+          <button className="fullwidthButton" onClick={toggleFullScreen}>
+            Fullscreen
+            {isFullscreen ? (
+              <ExitFullscreenIcon width={36} fill="#fff" />
+            ) : (
+              <FullscreenIcon width={36} fill="#fff" />
+            )}
+          </button>
+        </div>
+      )}
 
       {isGameFinish && (
         <Confetti height={windowSize.height} width={windowSize.width} recycle={false} />
