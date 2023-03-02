@@ -49,6 +49,7 @@ const App = () => {
 
   const handleClickClearImageSet = () => {
     setSelectedImageSet('')
+    handleClickPlayAgainButton()
   }
 
   const handleClickPlayAgainButton = () => {
