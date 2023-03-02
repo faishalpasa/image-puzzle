@@ -148,7 +148,11 @@ const App = () => {
             </>
           ) : (
             <div className="mainMenu">
-              <img src={`/images/logo.png`} alt="logo" className="logo"></img>
+              <img
+                src={`${process.env.REACT_APP_IMAGE_URL}/images/logo.png`}
+                alt="logo"
+                className="logo"
+              ></img>
               <div className="actionButtons">
                 {IMAGE_SETS.map((set) => (
                   <button
