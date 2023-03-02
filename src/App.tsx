@@ -60,7 +60,7 @@ const App = () => {
   useEffect(() => {
     if (!selectedImage) {
       const randomNo = Math.floor(Math.random() * 10) + 1
-      const randomImage = `/images/animals/${randomNo}.jpg`
+      const randomImage = `${process.env.REACT_APP_IMAGE_URL}/images/animals/${randomNo}.jpg`
       setSelectedImage(randomImage)
     }
   }, [selectedImage])
