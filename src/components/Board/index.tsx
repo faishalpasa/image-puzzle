@@ -11,6 +11,7 @@ interface BoardProps {
   revealedBlocks: { index: number; x: number | null; y: number | null }[]
   imageWidth: number
   end: boolean
+  selectedImage: string
 }
 
 const Board = ({
@@ -20,7 +21,8 @@ const Board = ({
   onClickBlock,
   revealedBlocks,
   imageWidth,
-  end
+  end,
+  selectedImage
 }: BoardProps) => {
   const handleClickBoard = (index: number, x: number, y: number) => {
     if (x === selectedBlock.x && y === selectedBlock.y) {
@@ -44,6 +46,7 @@ const Board = ({
           }
           imageWidth={imageWidth}
           withBorder={!end}
+          selectedImage={selectedImage}
         />
       ))}
     </div>

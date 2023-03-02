@@ -15,6 +15,7 @@ interface BlockPlaceProps {
   onClickBlock: (x: number, y: number) => void
   revealedBlocks: { index: number; x: number | null; y: number | null }[]
   imageWidth: number
+  selectedImage: string
 }
 
 const BlockPlace = ({
@@ -22,7 +23,8 @@ const BlockPlace = ({
   imageMultiple,
   onClickBlock,
   revealedBlocks,
-  imageWidth
+  imageWidth,
+  selectedImage
 }: BlockPlaceProps) => {
   const windowSize = useWindowSize()
   const [activeBlock, setActiveBlock] = useState<null | number>(null)
@@ -68,6 +70,7 @@ const BlockPlace = ({
             )
           }
           imageWidth={imageWidth * scale}
+          selectedImage={selectedImage}
           withBorder
         />
       ))}

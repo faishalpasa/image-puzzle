@@ -4,6 +4,7 @@ import Confetti from 'react-confetti'
 import './App.css'
 import Board from 'components/Board'
 import BlockPlace from 'components/BlockPlace'
+import { IMAGES } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
 const blocks = [
@@ -23,6 +24,7 @@ let imageWidth = 150
 
 const App = () => {
   const windowSize = useWindowSize()
+  const [selectedImage, setSelectedImage] = useState('')
   const [selectedBlock, setSelectedBlock] = useState<{ x: number | null; y: number | null }>({
     x: null,
     y: null
@@ -44,6 +46,7 @@ const App = () => {
     setIsGameFinish(false)
     setSelectedBlock({ x: null, y: null })
     setRevealedBlock([])
+    setSelectedImage('')
   }
 
   if (windowSize.width <= 1024) {
@@ -53,6 +56,14 @@ const App = () => {
   useEffect(() => {
     setIsGameFinish(revealedBlocks.length === blocks.length)
   }, [revealedBlocks])
+
+  useEffect(() => {
+    if (!selectedImage) {
+      const randomNo = Math.floor(Math.random() * 10) + 1
+      const randomImage = `/images/animals/${randomNo}.jpg`
+      setSelectedImage(randomImage)
+    }
+  }, [selectedImage])
 
   return (
     <div className="App">
@@ -64,6 +75,7 @@ const App = () => {
         revealedBlocks={revealedBlocks}
         imageWidth={imageWidth}
         end={isGameFinish}
+        selectedImage={selectedImage}
       />
       {isGameFinish ? (
         <div className="actionButtons">
@@ -78,6 +90,7 @@ const App = () => {
           onClickBlock={handleSelectBlockPlace}
           revealedBlocks={revealedBlocks}
           imageWidth={imageWidth}
+          selectedImage={selectedImage}
         />
       )}
 
