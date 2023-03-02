@@ -24,6 +24,8 @@ const blocks = [
 const imageMultiple = 3
 let imageWidth = 150
 
+let randomNo = Math.floor(Math.random() * 10) + 1
+
 const App = () => {
   const windowSize = useWindowSize()
   const [selectedImageSet, setSelectedImageSet] = useState('')
@@ -37,6 +39,7 @@ const App = () => {
   >([])
   const [isGameFinish, setIsGameFinish] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  // const [completedImages, setCompletedImages] = useState<number[]>([])
 
   const handleSelectBlockPlace = (x: number, y: number) => {
     setSelectedBlock({ x, y })
@@ -77,12 +80,18 @@ const App = () => {
   }
 
   useEffect(() => {
-    setIsGameFinish(revealedBlocks.length === blocks.length)
+    if (revealedBlocks.length === blocks.length) {
+      if (randomNo < 10) {
+        randomNo += 1
+      } else {
+        randomNo = 1
+      }
+      setIsGameFinish(true)
+    }
   }, [revealedBlocks])
 
   useEffect(() => {
     if (!selectedImage && selectedImageSet) {
-      const randomNo = Math.floor(Math.random() * 10) + 1
       const randomImage = `${process.env.REACT_APP_IMAGE_URL}/images/${selectedImageSet}/${randomNo}.jpg`
       setSelectedImage(randomImage)
     }
@@ -140,7 +149,7 @@ const App = () => {
       {!selectedImageSet && (
         <div className="fullwidthWrapper">
           <button className="fullwidthButton" onClick={toggleFullScreen}>
-            Fullscreen
+            {isFullscreen ? '' : 'Fullscreen'}
             {isFullscreen ? (
               <ExitFullscreenIcon width={36} fill="#fff" />
             ) : (
