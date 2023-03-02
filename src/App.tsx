@@ -10,15 +10,15 @@ import { IMAGE_SETS } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
 const blocks = [
-  { id: 1, x: 0, y: 0 },
-  { id: 2, x: -1, y: 0 },
-  { id: 3, x: -2, y: 0 },
-  { id: 4, x: 0, y: -1 },
-  { id: 5, x: -1, y: -1 },
-  { id: 6, x: -2, y: -1 },
-  { id: 7, x: 0, y: -2 },
-  { id: 8, x: -1, y: -2 },
-  { id: 9, x: -2, y: -2 }
+  { id: 1, x: 0, y: 0, borderRadius: '16px 0px 0px 0px' },
+  { id: 2, x: -1, y: 0, borderRadius: '0px 0px 0px 0px' },
+  { id: 3, x: -2, y: 0, borderRadius: '0px 16px 0px 0px' },
+  { id: 4, x: 0, y: -1, borderRadius: '0px 0px 0px 0px' },
+  { id: 5, x: -1, y: -1, borderRadius: '0px 0px 0px 0px' },
+  { id: 6, x: -2, y: -1, borderRadius: '0px 0px 0px 0px' },
+  { id: 7, x: 0, y: -2, borderRadius: '0px 0px 0px 16px' },
+  { id: 8, x: -1, y: -2, borderRadius: '0px 0px 0px 0px' },
+  { id: 9, x: -2, y: -2, borderRadius: '0px 0px 16px 0px' }
 ]
 
 const imageMultiple = 3

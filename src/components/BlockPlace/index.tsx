@@ -11,7 +11,7 @@ const shuffle = (array: any[]) => {
 
 interface BlockPlaceProps {
   imageMultiple: number
-  blocks: { id: number; x: number; y: number }[]
+  blocks: { id: number; x: number; y: number; borderRadius: string }[]
   onClickBlock: (x: number, y: number) => void
   revealedBlocks: { index: number; x: number | null; y: number | null }[]
   imageWidth: number
@@ -72,6 +72,7 @@ const BlockPlace = ({
           imageWidth={imageWidth * scale}
           selectedImage={selectedImage}
           withBorder
+          borderRadius={block.borderRadius.replace('16', 16 * scale)}
         />
       ))}
     </div>

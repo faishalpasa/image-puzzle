@@ -6,6 +6,7 @@
   cursor: pointer;
   transition: all .5s;
   transform: scale(1);
+  overflow: hidden;
 }
 
 .curtain {

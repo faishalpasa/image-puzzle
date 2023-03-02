@@ -12,6 +12,7 @@ interface BoardBlockProps {
   imageWidth?: number
   withBorder?: boolean
   selectedImage: string
+  borderRadius?: string
 }
 
 const BoardBlock = ({
@@ -23,7 +24,8 @@ const BoardBlock = ({
   reveal = true,
   active = false,
   imageWidth = 150,
-  withBorder = false
+  withBorder = false,
+  borderRadius = ''
 }: BoardBlockProps) => {
   return (
     <div
@@ -36,7 +38,8 @@ const BoardBlock = ({
         backgroundSize: `calc(${imageWidth}px * ${imageMultiple})`,
         backgroundPosition: `${imageWidth * (positionX || 0)}px ${imageWidth * (positionY || 0)}px`,
         transform: active ? 'scale(1.5)' : 'scale(1)',
-        zIndex: active ? 999 : 0
+        zIndex: active ? 999 : 0,
+        borderRadius
       }}
     >
       <div className={styles.curtain} style={{ opacity: reveal ? 0 : 0.8 }}></div>

@@ -5,7 +5,7 @@ import styles from './Board.module.css'
 
 interface BoardProps {
   imageMultiple: number
-  blocks: { id: number; x: number; y: number }[]
+  blocks: { id: number; x: number; y: number; borderRadius: string }[]
   selectedBlock: { x: number | null; y: number | null }
   onClickBlock: (index: number, x: number, y: number) => void
   revealedBlocks: { index: number; x: number | null; y: number | null }[]
@@ -47,6 +47,7 @@ const Board = ({
           imageWidth={imageWidth}
           withBorder={!end}
           selectedImage={selectedImage}
+          borderRadius={block.borderRadius}
         />
       ))}
     </div>
