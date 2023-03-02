@@ -100,7 +100,11 @@ const App = () => {
     <div className="App">
       {!isPlayed ? (
         <div className="intro">
-          <img src={`/images/logo.png`} alt="logo" className="logo"></img>
+          <img
+            src={`${process.env.REACT_APP_IMAGE_URL}/images/logo.png`}
+            alt="logo"
+            className="logo"
+          ></img>
           <button className="playButton" onClick={handleClickPlayButton}>
             Main
           </button>
