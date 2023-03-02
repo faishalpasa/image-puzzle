@@ -4,7 +4,7 @@ import Confetti from 'react-confetti'
 import './App.css'
 import Board from 'components/Board'
 import BlockPlace from 'components/BlockPlace'
-import { IMAGES } from 'constants/images'
+import { IMAGE_SETS } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
 const blocks = [
@@ -24,6 +24,7 @@ let imageWidth = 150
 
 const App = () => {
   const windowSize = useWindowSize()
+  const [selectedImageSet, setSelectedImageSet] = useState('')
   const [selectedImage, setSelectedImage] = useState('')
   const [selectedBlock, setSelectedBlock] = useState<{ x: number | null; y: number | null }>({
     x: null,
@@ -42,6 +43,14 @@ const App = () => {
     setRevealedBlock((prevProps) => [...prevProps, { index, x, y }])
   }
 
+  const handleClickImageSet = (value: string) => {
+    setSelectedImageSet(value)
+  }
+
+  const handleClickClearImageSet = () => {
+    setSelectedImageSet('')
+  }
+
   const handleClickPlayAgainButton = () => {
     setIsGameFinish(false)
     setSelectedBlock({ x: null, y: null })
@@ -58,49 +67,64 @@ const App = () => {
   }, [revealedBlocks])
 
   useEffect(() => {
-    if (!selectedImage) {
+    if (!selectedImage && selectedImageSet) {
       const randomNo = Math.floor(Math.random() * 10) + 1
-      const randomImage = `${process.env.REACT_APP_IMAGE_URL}/images/animals/${randomNo}.jpg`
+      const randomImage = `${process.env.REACT_APP_IMAGE_URL}/images/${selectedImageSet}/${randomNo}.jpg`
       setSelectedImage(randomImage)
     }
-  }, [selectedImage])
+  }, [selectedImage, selectedImageSet])
 
   return (
     <div className="App">
-      <Board
-        blocks={blocks}
-        imageMultiple={imageMultiple}
-        selectedBlock={selectedBlock}
-        onClickBlock={handleSelectedBlockBoard}
-        revealedBlocks={revealedBlocks}
-        imageWidth={imageWidth}
-        end={isGameFinish}
-        selectedImage={selectedImage}
-      />
-      {isGameFinish ? (
-        <div className="actionButtons">
-          <button className="playButton" onClick={handleClickPlayAgainButton}>
-            Main Lagi
-          </button>
-        </div>
+      {selectedImageSet ? (
+        <>
+          <Board
+            blocks={blocks}
+            imageMultiple={imageMultiple}
+            selectedBlock={selectedBlock}
+            onClickBlock={handleSelectedBlockBoard}
+            revealedBlocks={revealedBlocks}
+            imageWidth={imageWidth}
+            end={isGameFinish}
+            selectedImage={selectedImage}
+          />
+          {isGameFinish ? (
+            <div className="actionButtons">
+              <button className="playButton" onClick={handleClickPlayAgainButton}>
+                Main Lagi
+              </button>
+
+              <button className="playButton" onClick={handleClickClearImageSet}>
+                Ubah Set Gambar
+              </button>
+            </div>
+          ) : (
+            <BlockPlace
+              blocks={blocks}
+              imageMultiple={imageMultiple}
+              onClickBlock={handleSelectBlockPlace}
+              revealedBlocks={revealedBlocks}
+              imageWidth={imageWidth}
+              selectedImage={selectedImage}
+            />
+          )}
+        </>
       ) : (
-        <BlockPlace
-          blocks={blocks}
-          imageMultiple={imageMultiple}
-          onClickBlock={handleSelectBlockPlace}
-          revealedBlocks={revealedBlocks}
-          imageWidth={imageWidth}
-          selectedImage={selectedImage}
-        />
+        <div className="actionButtons">
+          {IMAGE_SETS.map((set) => (
+            <button
+              className="playButton"
+              key={set.value}
+              onClick={() => handleClickImageSet(set.value)}
+            >
+              {set.label}
+            </button>
+          ))}
+        </div>
       )}
 
       {isGameFinish && (
-        <Confetti
-          height={windowSize.height}
-          width={windowSize.width}
-          recycle={false}
-          gravity={0.5}
-        />
+        <Confetti height={windowSize.height} width={windowSize.width} recycle={false} />
       )}
     </div>
   )
