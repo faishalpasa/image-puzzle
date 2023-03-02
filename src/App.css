@@ -26,3 +26,15 @@
   border-radius: 32px;
   font-size: 20px;
 }
+
+.fullwidthWrapper {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.fullwidthButton {
+  background: transparent;
+  outline: unset;
+  border: unset;
+}

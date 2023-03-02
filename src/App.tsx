@@ -4,6 +4,8 @@ import Confetti from 'react-confetti'
 import './App.css'
 import Board from 'components/Board'
 import BlockPlace from 'components/BlockPlace'
+import FullscreenIcon from 'components/Icons/Fullscreen'
+import ExitFullscreenIcon from 'components/Icons/ExitFullscreen'
 import { IMAGE_SETS } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
@@ -34,6 +36,7 @@ const App = () => {
     { index: number; x: number | null; y: number | null }[]
   >([])
   const [isGameFinish, setIsGameFinish] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handleSelectBlockPlace = (x: number, y: number) => {
     setSelectedBlock({ x, y })
@@ -57,6 +60,16 @@ const App = () => {
     setSelectedBlock({ x: null, y: null })
     setRevealedBlock([])
     setSelectedImage('')
+  }
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen()
+      setIsFullscreen(true)
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen()
+      setIsFullscreen(false)
+    }
   }
 
   if (windowSize.width <= 1024) {
@@ -123,6 +136,16 @@ const App = () => {
           ))}
         </div>
       )}
+
+      <div className="fullwidthWrapper">
+        <button className="fullwidthButton" onClick={toggleFullScreen}>
+          {isFullscreen ? (
+            <ExitFullscreenIcon width={36} fill="#fff" />
+          ) : (
+            <FullscreenIcon width={36} fill="#fff" />
+          )}
+        </button>
+      </div>
 
       {isGameFinish && (
         <Confetti height={windowSize.height} width={windowSize.width} recycle={false} />
