@@ -1,7 +1,6 @@
 {
   "name": "imagepuzzle",
   "version": "0.1.0",
-  "homepage": "https://faishalpasa.github.io/project/image-puzzle",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",

@@ -1,13 +1,44 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #b2edef;
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   align-items: center;
-  justify-content: center;
   gap: 32px;
   flex-direction: column;
-  padding: 0px 32px
+  padding: 32px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+  justify-content: center;
+}
+
+.mainMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.version {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  font-size: 10px;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 10px;
+}
+
+.logo {
+  width: 100%;
 }
 
 .actionButtons {
@@ -25,6 +56,8 @@
   padding: 16px;
   border-radius: 32px;
   font-size: 20px;
+  background: #ff66c4;
+  color: #fff;
 }
 
 .fullwidthWrapper {

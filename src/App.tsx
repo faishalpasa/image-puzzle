@@ -2,10 +2,9 @@ import React, { useState, memo, useEffect } from 'react'
 import Confetti from 'react-confetti'
 
 import './App.css'
+import packageVariable from '../package.json'
 import Board from 'components/Board'
 import BlockPlace from 'components/BlockPlace'
-import FullscreenIcon from 'components/Icons/Fullscreen'
-import ExitFullscreenIcon from 'components/Icons/ExitFullscreen'
 import { IMAGE_SETS } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
@@ -38,7 +37,8 @@ const App = () => {
     { index: number; x: number | null; y: number | null }[]
   >([])
   const [isGameFinish, setIsGameFinish] = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  // const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isPlayed, setIsPlayed] = useState(false)
   // const [completedImages, setCompletedImages] = useState<number[]>([])
 
   const handleSelectBlockPlace = (x: number, y: number) => {
@@ -65,13 +65,12 @@ const App = () => {
     setSelectedImage('')
   }
 
-  const toggleFullScreen = () => {
+  const handleClickPlayButton = () => {
+    setIsPlayed(true)
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen()
-      setIsFullscreen(true)
     } else if (document.exitFullscreen) {
       document.exitFullscreen()
-      setIsFullscreen(false)
     }
   }
 
@@ -99,64 +98,67 @@ const App = () => {
 
   return (
     <div className="App">
-      {selectedImageSet ? (
+      {!isPlayed ? (
+        <div className="intro">
+          <img src={`/images/logo.png`} alt="logo" className="logo"></img>
+          <button className="playButton" onClick={handleClickPlayButton}>
+            Main
+          </button>
+          <p className="version">version {packageVariable.version}</p>
+          <p className="copyright">uje was here</p>
+        </div>
+      ) : (
         <>
-          <Board
-            blocks={blocks}
-            imageMultiple={imageMultiple}
-            selectedBlock={selectedBlock}
-            onClickBlock={handleSelectedBlockBoard}
-            revealedBlocks={revealedBlocks}
-            imageWidth={imageWidth}
-            end={isGameFinish}
-            selectedImage={selectedImage}
-          />
-          {isGameFinish ? (
-            <div className="actionButtons">
-              <button className="playButton" onClick={handleClickPlayAgainButton}>
-                Main Lagi
-              </button>
+          {selectedImageSet ? (
+            <>
+              <Board
+                blocks={blocks}
+                imageMultiple={imageMultiple}
+                selectedBlock={selectedBlock}
+                onClickBlock={handleSelectedBlockBoard}
+                revealedBlocks={revealedBlocks}
+                imageWidth={imageWidth}
+                end={isGameFinish}
+                selectedImage={selectedImage}
+              />
+              {isGameFinish ? (
+                <div className="actionButtons">
+                  <button className="playButton" onClick={handleClickPlayAgainButton}>
+                    Main Lagi
+                  </button>
 
-              <button className="playButton" onClick={handleClickClearImageSet}>
-                Ubah Set Gambar
-              </button>
-            </div>
+                  <button className="playButton" onClick={handleClickClearImageSet}>
+                    Ubah Set Gambar
+                  </button>
+                </div>
+              ) : (
+                <BlockPlace
+                  blocks={blocks}
+                  imageMultiple={imageMultiple}
+                  onClickBlock={handleSelectBlockPlace}
+                  revealedBlocks={revealedBlocks}
+                  imageWidth={imageWidth}
+                  selectedImage={selectedImage}
+                />
+              )}
+            </>
           ) : (
-            <BlockPlace
-              blocks={blocks}
-              imageMultiple={imageMultiple}
-              onClickBlock={handleSelectBlockPlace}
-              revealedBlocks={revealedBlocks}
-              imageWidth={imageWidth}
-              selectedImage={selectedImage}
-            />
+            <div className="mainMenu">
+              <img src={`/images/logo.png`} alt="logo" className="logo"></img>
+              <div className="actionButtons">
+                {IMAGE_SETS.map((set) => (
+                  <button
+                    className="playButton"
+                    key={set.value}
+                    onClick={() => handleClickImageSet(set.value)}
+                  >
+                    {set.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
         </>
-      ) : (
-        <div className="actionButtons">
-          {IMAGE_SETS.map((set) => (
-            <button
-              className="playButton"
-              key={set.value}
-              onClick={() => handleClickImageSet(set.value)}
-            >
-              {set.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {!selectedImageSet && (
-        <div className="fullwidthWrapper">
-          <button className="fullwidthButton" onClick={toggleFullScreen}>
-            {isFullscreen ? '' : 'Fullscreen'}
-            {isFullscreen ? (
-              <ExitFullscreenIcon width={36} fill="#fff" />
-            ) : (
-              <FullscreenIcon width={36} fill="#fff" />
-            )}
-          </button>
-        </div>
       )}
 
       {isGameFinish && (

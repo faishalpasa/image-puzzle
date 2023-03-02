@@ -39,6 +39,8 @@ const BoardBlock = ({
         backgroundPosition: `${imageWidth * (positionX || 0)}px ${imageWidth * (positionY || 0)}px`,
         transform: active ? 'scale(1.5)' : 'scale(1)',
         zIndex: active ? 999 : 0,
+        borderColor: active ? '#ff66c4' : '#fff',
+        borderWidth: active ? 2 : 1,
         borderRadius
       }}
     >
