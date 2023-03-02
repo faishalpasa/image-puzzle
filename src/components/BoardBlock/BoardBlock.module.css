@@ -1,0 +1,21 @@
+.boardBlock {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-collapse: collapse;
+  position: relative;
+  cursor: pointer;
+  transition: all .5s;
+  transform: scale(1);
+}
+
+.curtain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.boardBlockActive {
+  background: #fff;
+  opacity: 0.2;
+}
