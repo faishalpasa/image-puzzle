@@ -3,8 +3,8 @@ import React, { memo, useEffect, useState } from 'react'
 import BoardBlock from 'components/BoardBlock'
 import styles from './Board.module.css'
 
-const cheerSound = new Audio('/sounds/cheers.mp3')
-const wrongBlockSound = new Audio('/sounds/wrong-block.mp3')
+const cheerSound = new Audio(`${process.env.REACT_APP_IMAGE_URL}/sounds/cheers.mp3`)
+const wrongBlockSound = new Audio(`${process.env.REACT_APP_IMAGE_URL}/sounds/wrong-block.mp3`)
 
 const playSFXSound = (type: 'finish' | 'wrong') => {
   if (type === 'finish') {

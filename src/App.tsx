@@ -8,9 +8,9 @@ import BlockPlace from 'components/BlockPlace'
 import { IMAGE_SETS } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
-const backgroundSound = new Audio('/sounds/background.mp3')
-const cheerSound = new Audio('/sounds/cheers.mp3')
-const wrongBlockSound = new Audio('/sounds/wrong-block.mp3')
+const backgroundSound = new Audio(`${process.env.REACT_APP_IMAGE_URL}/sounds/background.mp3`)
+const cheerSound = new Audio(`${process.env.REACT_APP_IMAGE_URL}/sounds/cheers.mp3`)
+const wrongBlockSound = new Audio(`${process.env.REACT_APP_IMAGE_URL}/sounds/wrong-block.mp3`)
 
 const blocks = [
   { id: 1, x: 0, y: 0, borderRadius: '16px 0px 0px 0px' },
