@@ -1,7 +1,27 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 import BoardBlock from 'components/BoardBlock'
 import styles from './Board.module.css'
+
+const cheerSound = new Audio('/sounds/cheers.mp3')
+const wrongBlockSound = new Audio('/sounds/wrong-block.mp3')
+
+const playSFXSound = (type: 'finish' | 'wrong') => {
+  if (type === 'finish') {
+    if (cheerSound) {
+      cheerSound.volume = 1
+      cheerSound.currentTime = 0
+      cheerSound.play()
+    }
+  }
+  if (type === 'wrong') {
+    if (wrongBlockSound) {
+      wrongBlockSound.volume = 1
+      wrongBlockSound.currentTime = 0
+      wrongBlockSound.play()
+    }
+  }
+}
 
 interface BoardProps {
   imageMultiple: number
@@ -24,11 +44,26 @@ const Board = ({
   end,
   selectedImage
 }: BoardProps) => {
+  const [wrongBlock, setWrongBlock] = useState<{ index: null | number; isWrongBlock: boolean }>({
+    index: null,
+    isWrongBlock: false
+  })
   const handleClickBoard = (index: number, x: number, y: number) => {
-    if (x === selectedBlock.x && y === selectedBlock.y) {
-      onClickBlock(index, x, y)
+    if (selectedBlock.x !== null && selectedBlock.y !== null) {
+      if (x === selectedBlock.x && y === selectedBlock.y) {
+        onClickBlock(index, x, y)
+      } else {
+        setWrongBlock({ index, isWrongBlock: true })
+        playSFXSound('wrong')
+      }
     }
   }
+
+  useEffect(() => {
+    if (wrongBlock.index) {
+      setTimeout(() => setWrongBlock({ index: null, isWrongBlock: false }), 500)
+    }
+  }, [wrongBlock])
 
   return (
     <div className={styles.board} style={{ gridTemplateColumns: `repeat(3, ${imageWidth}px)` }}>
@@ -48,6 +83,7 @@ const Board = ({
           withBorder={!end}
           selectedImage={selectedImage}
           borderRadius={block.borderRadius}
+          wrong={wrongBlock.index === index}
         />
       ))}
     </div>

@@ -13,6 +13,7 @@ interface BoardBlockProps {
   withBorder?: boolean
   selectedImage: string
   borderRadius?: string
+  wrong?: boolean
 }
 
 const BoardBlock = ({
@@ -25,26 +26,29 @@ const BoardBlock = ({
   active = false,
   imageWidth = 150,
   withBorder = false,
-  borderRadius = ''
+  borderRadius = '',
+  wrong = false
 }: BoardBlockProps) => {
+  const borderActive = active ? '2px solid #ff66c4' : '1px solid #fff'
   return (
     <div
       onClick={() => onClick(positionX, positionY)}
       className={styles.boardBlock}
       style={{
-        border: withBorder ? '1px solid #fff' : 'unset',
+        border: withBorder ? borderActive : 'unset',
         backgroundRepeat: 'no-repeat',
         backgroundImage: `url(${selectedImage})`,
         backgroundSize: `calc(${imageWidth}px * ${imageMultiple})`,
         backgroundPosition: `${imageWidth * (positionX || 0)}px ${imageWidth * (positionY || 0)}px`,
         transform: active ? 'scale(1.5)' : 'scale(1)',
         zIndex: active ? 999 : 0,
-        borderColor: active ? '#ff66c4' : '#fff',
-        borderWidth: active ? 2 : 1,
         borderRadius
       }}
     >
-      <div className={styles.curtain} style={{ opacity: reveal ? 0 : 0.8 }}></div>
+      <div
+        className={styles.curtain}
+        style={{ opacity: reveal ? 0 : 0.8, background: wrong ? 'red' : '#000' }}
+      ></div>
     </div>
   )
 }

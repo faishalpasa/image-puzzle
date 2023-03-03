@@ -8,6 +8,10 @@ import BlockPlace from 'components/BlockPlace'
 import { IMAGE_SETS } from 'constants/images'
 import useWindowSize from 'hooks/useWindowSize'
 
+const backgroundSound = new Audio('/sounds/background.mp3')
+const cheerSound = new Audio('/sounds/cheers.mp3')
+const wrongBlockSound = new Audio('/sounds/wrong-block.mp3')
+
 const blocks = [
   { id: 1, x: 0, y: 0, borderRadius: '16px 0px 0px 0px' },
   { id: 2, x: -1, y: 0, borderRadius: '0px 0px 0px 0px' },
@@ -25,6 +29,32 @@ let imageWidth = 150
 
 let randomNo = Math.floor(Math.random() * 10) + 1
 
+const playBackgroundSound = () => {
+  if (backgroundSound) {
+    backgroundSound.volume = 0.2
+    backgroundSound.loop
+    backgroundSound.currentTime = 0
+    backgroundSound.play()
+  }
+}
+
+const playSFXSound = (type: 'finish' | 'wrong') => {
+  if (type === 'finish') {
+    if (cheerSound) {
+      cheerSound.volume = 1
+      cheerSound.currentTime = 0
+      cheerSound.play()
+    }
+  }
+  if (type === 'wrong') {
+    if (wrongBlockSound) {
+      wrongBlockSound.volume = 1
+      wrongBlockSound.currentTime = 0
+      wrongBlockSound.play()
+    }
+  }
+}
+
 const App = () => {
   const windowSize = useWindowSize()
   const [selectedImageSet, setSelectedImageSet] = useState('')
@@ -37,16 +67,15 @@ const App = () => {
     { index: number; x: number | null; y: number | null }[]
   >([])
   const [isGameFinish, setIsGameFinish] = useState(false)
-  // const [isFullscreen, setIsFullscreen] = useState(false)
   const [isPlayed, setIsPlayed] = useState(false)
-  // const [completedImages, setCompletedImages] = useState<number[]>([])
 
   const handleSelectBlockPlace = (x: number, y: number) => {
     setSelectedBlock({ x, y })
   }
 
-  const handleSelectedBlockBoard = (index: number, x: number, y: number) => {
+  const handleSelectBlockBoard = (index: number, x: number, y: number) => {
     setRevealedBlock((prevProps) => [...prevProps, { index, x, y }])
+    setSelectedBlock({ x: null, y: null })
   }
 
   const handleClickImageSet = (value: string) => {
@@ -67,6 +96,7 @@ const App = () => {
 
   const handleClickPlayButton = () => {
     setIsPlayed(true)
+    playBackgroundSound()
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen()
     } else if (document.exitFullscreen) {
@@ -86,6 +116,7 @@ const App = () => {
         randomNo = 1
       }
       setIsGameFinish(true)
+      playSFXSound('finish')
     }
   }, [revealedBlocks])
 
@@ -119,7 +150,7 @@ const App = () => {
                 blocks={blocks}
                 imageMultiple={imageMultiple}
                 selectedBlock={selectedBlock}
-                onClickBlock={handleSelectedBlockBoard}
+                onClickBlock={handleSelectBlockBoard}
                 revealedBlocks={revealedBlocks}
                 imageWidth={imageWidth}
                 end={isGameFinish}
