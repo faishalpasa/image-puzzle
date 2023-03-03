@@ -43,7 +43,6 @@
 
 .actionButtons {
   display: flex;
-  width: 100%;
   justify-content: center;
   padding: 16px;
   flex-direction: column;
