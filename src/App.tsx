@@ -32,7 +32,7 @@ let randomNo = Math.floor(Math.random() * 10) + 1
 const playBackgroundSound = () => {
   if (backgroundSound) {
     backgroundSound.volume = 1
-    backgroundSound.loop
+    backgroundSound.loop = true
     backgroundSound.currentTime = 0
     backgroundSound.play()
   }
